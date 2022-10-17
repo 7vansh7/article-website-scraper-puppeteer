@@ -40,7 +40,7 @@ async function start() {
       const Link = "https://www.economist.com" + src;
       array.push({ Title, Link , Url});
     }
-// further code is or pagination 
+// further code is for pagination 
     const btn =
       (await page.$(
         ".ds-pagination__nav.ds-pagination__nav--next.ds-pagination__nav--disabled"
