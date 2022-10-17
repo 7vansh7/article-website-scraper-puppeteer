@@ -1,6 +1,6 @@
-// JUST ADD THE COOKIES FUNCTION TO MAKE THE APP PERFECT
-//  TRY TO UNDERSTAND THE LOGIC BETTER
+// Best of luck to whoever is using my code
 
+// basic requirements
 const puppeteer = require("puppeteer");
 const fs = require("fs/promises");
 async function start() {
@@ -11,11 +11,11 @@ async function start() {
   await page.goto("https://www.economist.com/finance-and-economics?utm_source=google&utm_medium=cpc.adword.pd&utm_campaign=a.non-brand.generic&utm_content=conversion.non-brand.anonymous_search-generic-core_en-g-economyfinance-phrase&gclid=CjwKCAjwqJSaBhBUEiwAg5W9pycFiBmPaLQ1yp_p1u-h0eUN48H_JdLNPveLVMVGEM1hiTqDSGGSiRoCeGYQAvD_BwE&gclsrc=aw.ds", {
     waitUntil: ['domcontentloaded','load','networkidle0','networkidle2'],
   });
- 
+//  initializing the 'next page' button on the page with the name is_disabled
   let is_disabled = false;
   while (!is_disabled) {
     let dom = await page.$('#sp_message_iframe_717177',{waitUntil:['domcontentloaded','load','networkidle0','networkidle2']}) 
-    
+//     dom is the name of a 'accept cookies' prompt which appears sometimes
     if(dom !== null){
     const frameHandle = await  page.$('#sp_message_iframe_717177')
     const frame =  await frameHandle.contentFrame()
@@ -40,12 +40,12 @@ async function start() {
       const Link = "https://www.economist.com" + src;
       array.push({ Title, Link , Url});
     }
-
+// further code is or pagination 
     const btn =
       (await page.$(
         ".ds-pagination__nav.ds-pagination__nav--next.ds-pagination__nav--disabled"
       )) !== null;
-
+      
     is_disabled = btn;
     if (!btn) {
       await Promise.all([
@@ -56,9 +56,12 @@ async function start() {
         page.waitForNavigation({ waitUntil: "load" }),
       ]);
     }
-    await fs.appendFile("array.json", JSON.stringify(array, null, `\t`));
+//     further code is for making a json file with the collected data
+    await fs.appendFile("articles.json", JSON.stringify(array, null, `\t`));
     console.log(array.length);
   }
   await browser.close();
 }
 start();
+
+
